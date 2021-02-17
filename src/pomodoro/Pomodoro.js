@@ -11,10 +11,10 @@ function Pomodoro() {
   const [isPaused, setIsPaused] = useState(false);
   const [inSession, setInSession] = useState(false);
   const [onBreak, setOnBreak] = useState(false);
-
   const [breakIntervalState, setBreakIntervalState] = useState(5)
   const [focusIntervalState, setFocusIntervalState] = useState(25)
   const [timeRemainingState, setTimeRemainingState] = useState(focusIntervalState*60)
+  const alarm = new Audio('https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg');
 
   const increaseByFive = () => {
     if(inSession) return;
@@ -43,6 +43,18 @@ function Pomodoro() {
     () => {
       // ToDo: Implement what should happen when the timer is running
       setTimeRemainingState((current) => current - 1);
+      if (timeRemainingState <= 0) {
+        setIsPaused(() => !isPaused)
+        alarm.play();
+        if (onBreak === false) {
+          setOnBreak(() => !onBreak);
+          setTimeRemainingState(breakIntervalState*60);
+        } else {
+          setOnBreak(() => !onBreak);
+          setTimeRemainingState(focusIntervalState*60);
+        }
+      }
+
     },
     isTimerRunning ? 1000 : null
   );
@@ -59,22 +71,10 @@ function Pomodoro() {
     setInSession(false); setOnBreak(false); setIsPaused(false); setIsTimerRunning(false);
     setTimeRemainingState(focusIntervalState*60)
   }
-
-  const alarm = new Audio('https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg');
-  
-  if (!onBreak && timeRemainingState === 0) {
-      alarm.play();
-      setOnBreak(true);
-      setTimeRemainingState(breakIntervalState*60)
-    } else if (onBreak && timeRemainingState === 0){
-      alarm.play();
-      stopSession();
-    }
-  
   
   return (
     <div className="pomodoro">
-      <div className="row">
+      <div className="row mb-5">
         <FocusInterval focusInterval={focusIntervalState} inSession={inSession} upByFive={increaseByFive} downByFive={decreaseByFive} />
         <BreakInterval breakInterval={breakIntervalState} upByOne={increaseByOne} downByOne={decreaseByOne} />
       </div>

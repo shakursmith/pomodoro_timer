@@ -11,7 +11,7 @@ function Timer(props) {
     
 
     return (
-        <div style={sessionDisplay}>
+        <div style={sessionDisplay} className="mb-5">
             {/* TODO: This area should show only when a focus or break session is running or pauses */}
             <div className="row mb-2">
                 <div className="col">

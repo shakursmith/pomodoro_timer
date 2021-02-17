@@ -4,7 +4,7 @@ import classNames from "../utils/class-names";
 function PlayPause(props) {
 
     return (
-        <div className="row">
+        <div className="row mb-5">
         <div className="col">
           <div
             className="btn-group btn-group-lg mb-2"

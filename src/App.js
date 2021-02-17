@@ -5,11 +5,15 @@ import Pomodoro from "./pomodoro/Pomodoro";
 function App() {
   return (
     <div className="App">
-      <header className="App-header container">
-        <h1>Pomodoro Timer</h1>
-      </header>
-      <div className="container">
-        <Pomodoro />
+      <div className="container vh-100 d-flex flex-column justify-content-center">
+        <div className="row">
+          <div className="col">
+            <header className="App-header container mb-5">
+              <h1>Pomodoro Timer</h1>
+            </header>
+            <Pomodoro />
+          </div>  
+        </div>
       </div>
     </div>
   );
